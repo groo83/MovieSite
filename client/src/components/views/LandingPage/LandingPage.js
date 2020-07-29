@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { FaCode } from "react-icons/fa";
 import { API_URL,API_KEY, IMAGE_BASE_URL } from '../../Config';
 import MainImage from './Sections/MainImage';
+import GridCards from '../commons/GridCards';
+import { Row } from 'antd';
 
 
 function LandingPage() {
@@ -16,6 +18,7 @@ function LandingPage() {
         fetch(endpoint)
             .then(response=>response.json()) //.json메소드를 이용해서 사용해야함
             .then(response =>{
+                console.log(response)
                 setMovies([response.results])
                 setMainMovieImage(response.results[0])
             })
@@ -38,6 +41,22 @@ function LandingPage() {
                     <h2> Movies by latest</h2>
                     <hr/>
                     {/*Movie Grid Cards */}
+                    <Row gutter={[16,16]}> {/* 사진사이여백 */}
+                        {console.dir(Movies[0]) }{/* Movies가 Array lenth 1로되어있고 0번째에 20개 데이터 있어서 [0]으로 수정 */}
+                        {Movies[0] && Movies[0].map((movie,index)=>(
+                            <React.Fragment key={index}>
+                                <GridCards  
+                                    image={movie.poster_path ? 
+                                        `${IMAGE_BASE_URL}w500${movie.poster_path}`: null }   
+                                    movieId={movie.id}
+                                    movieName={movie.original_title}
+                                    
+                                />
+
+                            </React.Fragment>
+                        ))}
+                        
+                    </Row>
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
