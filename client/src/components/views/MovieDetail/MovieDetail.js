@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { API_URL, API_KEY, IMAGE_BASE_URL } from '../../Config';
 import MainImage from '../LandingPage/Sections/MainImage';
-import { Button } from 'antd';
+import { Button, Row } from 'antd';
 import MovieInfo from './Sections/MovieInfo';
+import GridCards from '../commons/GridCards';
 
 
 function MovieDetail(props) {
@@ -10,6 +11,9 @@ function MovieDetail(props) {
     //console.log(props)
     let movieId = props.match.params.movieId;
     const [Movie, setMovie] = useState([])
+
+    const [Cast, setCast] = useState([])
+    const [ActorToggle, setActorToggle] = useState(false)
 
     useEffect(() => {
         // DOM이 로딩되면 실행할 동작
@@ -22,8 +26,19 @@ function MovieDetail(props) {
                 //console.log(response)
                 setMovie(response)
             })
+
+        fetch(endpointCrew)
+            .then(response=> response.json())
+            .then(response=>{
+                //console.log(response)
+                setCast(response.cast)
+            })
     }, [])
 
+
+    const toggleActorView = ()=>{
+        setActorToggle(!ActorToggle)
+    }
     return (
         <div>
         {/* Header */}
@@ -65,20 +80,25 @@ function MovieDetail(props) {
             {/* Actors Grid*/}
 
             <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem' }}>
-                <Button onClick>Toggle Actor View </Button>
+                <Button onClick={toggleActorView}>Toggle Actor View </Button>
             </div>
+            {ActorToggle &&
+                <Row gutter={[16,16]}> {/* 사진사이여백 */}
+                    
+                    {Cast && Cast.map((cast,index)=>(
+                        <React.Fragment key={index}>
+                            <GridCards  
+                                image={cast.profile_path ? 
+                                    `${IMAGE_BASE_URL}w500${cast.profile_path}`: null }  
+                                characterName={cast.name}
+                                
+                            />
 
-            {/* {ActorToggle &&
-                <Row gutter={[16, 16]}>
-                    {
-                        !LoadingForCasts ? Casts.map((cast, index) => (
-                            cast.profile_path &&
-                            <GridCards actor image={cast.profile_path} characterName={cast.characterName} />
-                        )) :
-                            <div>loading...</div>
-                    }
+                        </React.Fragment>
+                    ))}
+                    
                 </Row>
-            } */}
+            }
             <br />
 
             {/* <div style={{ display: 'flex', justifyContent: 'center' }}>
