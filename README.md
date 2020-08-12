@@ -1,16 +1,10 @@
-Hello, My Friends  
-Thank you for Having interest in this repository ! 
+## React MovieApp Project
 
-To use this application, 
-
-1. make dev.js file inside config folder 
-2. put mongoDB info into dev.js file 
-3. Type  " npm install " inside the root directory  ( Download Server Dependencies ) 
-4. Type " npm install " inside the client directory ( Download Front-end Dependencies )
+- Movie API 
+- Favorite List
 
 
-If you have problem, feel free to ask me ^^ 
 
- You can watch the tutorial for this app.
+![image](https://user-images.githubusercontent.com/43803644/90018546-0acdbc00-dce8-11ea-89e6-3d666f5fd6ff.png)
 
-https://www.youtube.com/channel/UCFyXA9x8lpL3EYWeYhj4C4Q?view_as=subscriber
+![image](https://user-images.githubusercontent.com/43803644/90018909-9e06f180-dce8-11ea-9df6-2c2b1eacf38a.png)
