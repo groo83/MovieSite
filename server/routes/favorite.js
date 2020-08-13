@@ -33,4 +33,25 @@ router.post("/favorited", (req, res) => {
     
 });
 
+router.post("/addToFavorite", (req, res) => {
+    // document instance 생성
+    const favorite = new Favorite(req.body)
+    favorite.save((err, doc)=>{
+        if(err) return res.status(400).send(err)
+        return res.status(200).json({success:true})
+    })
+
+    
+});
+router.post("/removeFromFavorite", (req, res) => {
+      
+    Favorite.findOneAndRemove({movieId : req.body.movieId,userFrom:req.body.userFrom})
+        .exec((err,doc)=>{
+            if(err) return res.status(400).send(err)
+            res.status(200).json({success:true,doc})
+        })
+
+    
+});
+
 module.exports = router;
